@@ -4,11 +4,11 @@
 latexformula.py: Inskcape extension to convert LaTeX equation strings to SVG paths
 
 Requirements:
-	- inkscape, latex, dvips, pstoedit
+	- inkscape, latex, dvips, pstoedit, ghostscript
 	- tested only on linux
 
 Related Work:
-	- based on eqtexsvg by Julien Vitard <julienvitard@gmail.com> and 
+	- based on eqtexsvg by Julien Vitard <julienvitard@gmail.com> and
 	  Christoph Schmidt-Hieber <christsc@gmx.de>
 
 License:
@@ -27,8 +27,8 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA
 """
 
-import inkex, os, tempfile, sys, xml.dom.minidom
-	
+import inkex, os, tempfile, sys, xml.dom.minidom, shutil
+
 class LatexFormula(inkex.Effect):
 
 	def __init__(self):
@@ -41,7 +41,7 @@ class LatexFormula(inkex.Effect):
 						action="store", type="string",
 						dest="preamble", default="",
 						help="TeX Preamble")
-						
+
 
 	def effect(self):
 		base_dir = tempfile.mkdtemp("", "inkscape-");
@@ -56,15 +56,15 @@ class LatexFormula(inkex.Effect):
 		out_err_file = os.path.join(base_dir, "latexformula.out.err")
 
 		self.create_equation_tex(latex_file, self.options.formula, self.options.preamble)
-		
+
 		self.compile_tex_to_dvi(base_dir, latex_file, out_file)
-		
+
 		if (self.compiling_tex_failed(dvi_file)):
 			self.print_errors(out_file, out_err_file, base_dir)
 			sys.exit(1)
 
 		self.convert_dvi_to_ps(dvi_file, ps_file)
-		
+
 		self.convert_ps_to_svg(base_dir, ps_file, svg_file, out_file, err_file)
 
  		self.import_svg(svg_file)
@@ -115,11 +115,11 @@ class LatexFormula(inkex.Effect):
 		os.system('cat ' + out_file + " | grep -e 'Error\|l\.[0-9]\|\! ' > " + out_err_file)
 		out_err_file_handle = open(out_err_file, 'r')
 		print >>sys.stderr, out_err_file_handle.read()
-		
+
 		print >>sys.stderr, "Invalid LaTeX input. "
 		print >>sys.stderr, "Temporary files were left in:", base_dir
 		print >>sys.stderr, ""
-		
+
 		out_file_handle = open(out_file, 'r')
 		print >>sys.stderr, out_file_handle.read()
 
@@ -159,7 +159,7 @@ class LatexFormula(inkex.Effect):
 
 
 	def cleanup_temporary_files(self, base_dir):
-		os.system('rm -r "%s"' % (base_dir))			
+		shutil.rmtree(base_dir)
 
 if __name__ == '__main__':
 	LatexFormula().affect()

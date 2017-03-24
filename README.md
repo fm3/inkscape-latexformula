@@ -3,8 +3,8 @@
 Inskcape extension to convert LaTeX equation strings to SVG paths
 
 ## Requirements
-- inkscape, latex, dvips, pstoedit
-- tested only on linux
+- inkscape, latex, dvips, pstoedit, ghostscript
+- tested on linux and windows
 
 ## Installation
 - copy `latexformula.inx` and `latexformula.py` to `~/.config/inkscape/extensions/`
@@ -15,5 +15,5 @@ Inskcape extension to convert LaTeX equation strings to SVG paths
 - Enter your formula and optional packages if needed
 
 ## Related Work:
-- based on eqtexsvg by Julien Vitard <julienvitard@gmail.com> and 
+- based on eqtexsvg by Julien Vitard <julienvitard@gmail.com> and
   Christoph Schmidt-Hieber <christsc@gmx.de>

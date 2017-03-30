@@ -9,7 +9,9 @@
 	<dependency type="executable" location="path">pstoedit</dependency>
 	<param name="formula" type="string" _gui-text="LaTeX Formula: ">$v=\frac{s}{t}$</param>
 	<param name="preamble" type="string" _gui-text="Additional Preamble: ">\usepackage{mathpazo}</param>
-	<param name="some_name" type="description">..........................................................................................................................................</param>
+	<param name="fontsize" type=
+	"float" min="0.01" max="1000" _gui-text="Font size (pt): ">10</param>
+	<param name="some_name" type="description">___________________________________________________________________________________ For more information visit https://github.com/fm3/inkscape-latexformula</param>
 	<effect>
 		<object-type>all</object-type>
 		<effects-menu>

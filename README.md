@@ -3,11 +3,11 @@
 Inskcape extension to convert LaTeX equation strings to SVG paths
 
 ## Requirements
-- inkscape, latex, dvips, pstoedit, ghostscript
-- tested on linux and windows
+- inkscape
+- latex, dvips, pstoedit, ghostscript need to be in your PATH
 
 ## Installation
-- copy `latexformula.inx` and `latexformula.py` to `~/.config/inkscape/extensions/`
+- copy `latexformula.inx` and `latexformula.py` to `~/.config/inkscape/extensions/` on linux and `C:\Users\you\AppData\Roaming\inkscape\extensions\` on windows
 - restart inkscape
 
 ## Usage

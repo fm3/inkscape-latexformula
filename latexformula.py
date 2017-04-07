@@ -105,7 +105,7 @@ class LatexFormula(inkex.Effect):
 		print >>sys.stderr, ""
 		print >>sys.stderr, out_content
 
-	def to_document_unit(self, value, unit):
+	def to_document_unit(self, value, unit=""):
 		literal = str(value) + unit
 		try:
 			return self.unittouu(literal)
@@ -128,7 +128,8 @@ class LatexFormula(inkex.Effect):
 					if not self.is_helper_rect(c):
 						child = clone_and_rewrite(self, c)
 						if c_tag == 'g':
-							child.set('transform','matrix(%f,0,0,-%f,-%f,%f)' % (self.scale,self.scale,self.anchorX*self.scale, self.anchorY*self.scale))
+							child.set('transform','%s matrix(%f,0,0,-%f,-%f,%f)' % \
+								(self.layer_untransform(), self.scale,self.scale,self.anchorX*self.scale, self.anchorY*self.scale))
 							child.set('latex_formula', self.options.formula)
 						node_out.append(child)
 			return node_out
@@ -138,6 +139,14 @@ class LatexFormula(inkex.Effect):
 
 		group = clone_and_rewrite(self, svg_root)
 		self.current_layer.append(group)
+
+	def layer_untransform(self):
+		translate_regex = re.compile('translate\((.*),(.*)\)')
+		if 'transform' in self.current_layer.attrib:
+			match = re.match(translate_regex, self.current_layer.attrib['transform'])
+			if (match):
+				return 'translate(%f,%f)' % (-float(match.group(1)), -float(match.group(2)))
+		return ''
 
 	def is_helper_rect(self, node):
 		return 'fill' in node.attrib and node.attrib['fill'] == 'lime'

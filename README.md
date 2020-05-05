@@ -3,7 +3,7 @@
 Inskcape extension to convert LaTeX equation strings to SVG paths
 
 ## Requirements
-- inkscape
+- inkscape 1.0 (refer to older commit 2064ea8fdf6164ef1a4ff7343ea496745db07d94 for inkscape 0.92)
 - latex, dvips, pstoedit, ghostscript need to be in your PATH
 
 ## Installation
